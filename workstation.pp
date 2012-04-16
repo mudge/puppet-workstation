@@ -83,6 +83,10 @@ package {
     provider => homebrew,
     require  => Vcsrepo['/usr/local'];
 
+  'gpg':
+    ensure   => present,
+    provider => homebrew,
+    require  => Vcsrepo['/usr/local'];
 }
 
 # mvim command.
@@ -122,5 +126,12 @@ file {
   "$home/.ssh":
     ensure => link,
     target => "$home/Dropbox/.ssh";
+
+  "$home/.bundle":
+    ensure => directory;
+
+  "$home/.bundle/config":
+    ensure  => present,
+    content => "---\nBUNDLE_BIN: bin\n\n";
 }
 

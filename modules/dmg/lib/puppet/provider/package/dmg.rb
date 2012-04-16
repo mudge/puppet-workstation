@@ -7,7 +7,7 @@ Puppet::Type.type(:package).provide(:dmg, :parent => Puppet::Provider::Package) 
   commands :hdiutil => "hdiutil"
   commands :curl    => "curl"
 
-  has_feature :installable, :uninstallable
+  has_feature :installable
 
   def self.applications
     Dir["/Applications/*.app"].map { |app| File.basename(app, ".app") }
@@ -41,9 +41,5 @@ Puppet::Type.type(:package).provide(:dmg, :parent => Puppet::Provider::Package) 
         hdiutil(:detach, "mount")
       end
     end
-  end
-
-  def uninstall
-    FileUtils.remove_entry_secure("/Applications/#{resource[:name]}.app")
   end
 end

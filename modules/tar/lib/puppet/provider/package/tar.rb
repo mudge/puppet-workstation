@@ -7,7 +7,7 @@ Puppet::Type.type(:package).provide(:tar, :parent => Puppet::Provider::Package) 
   commands :curl    => "curl"
   commands :tar     => "tar"
 
-  has_feature :installable, :uninstallable
+  has_feature :installable
 
   def self.applications
     Dir["/Applications/*.app"].map { |app| File.basename(app, ".app") }
@@ -39,9 +39,5 @@ Puppet::Type.type(:package).provide(:tar, :parent => Puppet::Provider::Package) 
         FileUtils.cp_r(app, "/Applications")
       end
     end
-  end
-
-  def uninstall
-    FileUtils.remove_entry_secure("/Applications/#{resource[:name]}.app")
   end
 end

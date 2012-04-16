@@ -5,7 +5,7 @@ Puppet::Type.type(:package).provide(:homebrew, :parent => Puppet::Provider::Pack
 
   commands :brew => "brew"
 
-  has_feature :installable, :uninstallable, :upgradeable
+  has_feature :installable, :uninstallable
 
   def self.installed
     brew(:list, "-v").split("\n").map { |a| a.split.first }
@@ -27,10 +27,6 @@ Puppet::Type.type(:package).provide(:homebrew, :parent => Puppet::Provider::Pack
 
   def uninstall
     brew(:remove, resource[:name])
-  end
-
-  def update
-    install
   end
 end
 

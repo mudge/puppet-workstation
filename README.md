@@ -4,11 +4,11 @@ This is an attempt to use Puppet to manage applications and configuration on my
 personal laptop.
 
 As I use a Mac, applications mostly come in the form of disk images from the
-Internet (files ending in `.dmg`) or in some sort of archive (e.g.  [MacVim][]
+Internet (files ending in `.dmg`) or in some sort of archive (e.g. [MacVim][]
 which comes in a `.tgz`). Development tools (such as git) are installed via
 [Homebrew][] and Ruby is installed via [rbenv][] and [ruby-build][].
 
-To accomodate all of the above, I have written a few Puppet package providers:
+To accommodate all of the above, I have written a few Puppet package providers:
 
 * `dmg`: To download disk images from a URL and then extract specific
   applications from them into `/Applications`;

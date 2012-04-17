@@ -35,12 +35,14 @@ $ git submodule update
 And then you can run it with:
 
 ```console
-$ puppet apply --no-report --modulepath=modules workstation.pp
+$ ./workstation.rb
 ```
 
-The only caveat at the moment is that I don't want to run Puppet as root so in
-order to install Homebrew, you will need to manually create `/usr/local` as
-group-writeable and owned by the `admin` group.
+To perform the necessary one-time setup as root, you can simply do:
+
+```console
+$ sudo ./workstation.rb
+```
 
   [MacVim]: http://code.google.com/p/macvim/
   [Homebrew]: http://mxcl.github.com/homebrew/

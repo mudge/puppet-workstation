@@ -76,6 +76,10 @@ node "default" do
       :source  => "puppet:///modules/mvim/mvim",
       :require => "Vcsrepo[/usr/local]"
 
+    file ["/usr/local/bin/vim", "/usr/local/bin/gvim"],
+      :ensure => :link,
+      :target => "/usr/local/bin/mvim"
+
     dotfile %w[.vim .vimrc .gvimrc .zshrc .gemrc .bundle]
 
     %w[.gnupg .ssh].each do |dotfile|

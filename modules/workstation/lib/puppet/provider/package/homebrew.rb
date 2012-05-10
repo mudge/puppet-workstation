@@ -5,18 +5,30 @@ Puppet::Type.type(:package).provide(:homebrew, :parent => Puppet::Provider::Pack
 
   commands :brew => "brew"
 
-  has_feature :installable, :uninstallable
+  has_feature :installable, :uninstallable, :versionable
 
   def self.installed
-    brew(:list, "-v").split("\n").map { |a| a.split.first }
+    brew(:list, "-v").split("\n").map { |line| line.split }
   end
 
   def self.instances
-    installed.map { |a| new(:name => a, :ensure => :present, :provider => :homebrew) }
+    installed.map { |name, version|
+      ensure_value = if version == "HEAD"
+        :head
+      else
+        :present
+      end
+
+      new(:name => name, :ensure => ensure_value, :provider => :homebrew)
+    }
   end
 
   def install
-    brew(:install, resource[:name])
+    if resource[:ensure] == :head
+      brew(:install, "--HEAD", resource[:name])
+    else
+      brew(:install, resource[:name])
+    end
   end
 
   def query

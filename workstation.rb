@@ -68,7 +68,13 @@ node "default" do
       :provider => :git,
       :force    => true
 
-    brew %w[git hub gnupg]
+    brew %w[git hub gnupg tree ack mercurial]
+
+    # re2 is a HEAD-only package.
+    package "re2",
+      :ensure => :head,
+      :provider => :homebrew,
+      :require  => "Vcsrepo[/usr/local]"
 
     file "/usr/local/bin/mvim",
       :ensure  => :present,
@@ -76,7 +82,7 @@ node "default" do
       :source  => "puppet:///modules/mvim/mvim",
       :require => "Vcsrepo[/usr/local]"
 
-    file ["/usr/local/bin/vim", "/usr/local/bin/gvim"],
+    file "/usr/local/bin/vim",
       :ensure => :link,
       :target => "/usr/local/bin/mvim"
 

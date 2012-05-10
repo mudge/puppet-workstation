@@ -26,14 +26,21 @@ node "default" do
       :ensure => :directory,
       :group  => "admin",
       :mode   => "0775"
+
+    package "VirtualBox",
+      :ensure   => :present,
+      :source   => "http://download.virtualbox.org/virtualbox/4.1.14/VirtualBox-4.1.14-77440-OSX.dmg",
+      :provider => :dmginstaller
   else
     {
-      "Google Chrome" => "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg",
-      "Adium"         => "http://download.adium.im/Adium_1.5.dmg",
-      "Spotify"       => "http://download.spotify.com/Spotify.dmg",
-      "Skype"         => "http://www.skype.com/go/getskype-macosx.dmg",
-      "Dropbox"       => "https://www.dropbox.com/download?plat=mac",
-      "LaunchBar"     => "http://www.obdev.at/downloads/LaunchBar/nightly/LaunchBar-5.2-nightly-907.dmg"
+      "Google Chrome"    => "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg",
+      "Adium"            => "http://download.adium.im/Adium_1.5.dmg",
+      "Spotify"          => "http://download.spotify.com/Spotify.dmg",
+      "Skype"            => "http://www.skype.com/go/getskype-macosx.dmg",
+      "Dropbox"          => "https://www.dropbox.com/download?plat=mac",
+      "LaunchBar"        => "http://www.obdev.at/downloads/LaunchBar/nightly/LaunchBar-5.2-nightly-907.dmg",
+      "PS3 Media Server" => "http://ps3mediaserver.googlecode.com/files/pms-macosx-1.52.1.dmg",
+      "Transmission"     => "http://download.transmissionbt.com/files/Transmission-2.51.dmg"
     }.each do |name, source|
       package name,
         :ensure   => :present,
@@ -44,7 +51,12 @@ node "default" do
     package "MacVim",
       :ensure   => :present,
       :source   => "https://github.com/downloads/b4winckler/macvim/MacVim-snapshot-64.tbz",
-      :provider => :tar
+      :provider => :archive
+
+    package "Notational Velocity",
+      :ensure   => :present,
+      :source   => "http://notational.net/NotationalVelocity.zip",
+      :provider => :archive
 
     vcsrepo "#{ENV["HOME"]}/.rbenv",
       :ensure   => :present,

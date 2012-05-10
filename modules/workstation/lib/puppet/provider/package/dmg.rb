@@ -1,45 +1,30 @@
 require "puppet/provider/package"
 require "tmpdir"
 
-Puppet::Type.type(:package).provide(:dmg, :parent => Puppet::Provider::Package) do
+Puppet::Type.type(:package).provide(:dmg, :parent => :application) do
   desc "Package management using Disk Images from the Internet."
 
   commands :hdiutil => "hdiutil"
-  commands :curl    => "curl"
 
-  has_feature :installable
+  private
 
-  def self.applications
-    Dir["/Applications/*.app"].map { |app| File.basename(app, ".app") }
+  def dmg
+    "#{resource[:name]}.dmg"
   end
 
-  def self.instances
-    applications.map { |a| new(:name => a, :ensure => :present, :provider => :dmg) }
+  def download
+    curl("-o", dmg, "-L", resource[:source])
   end
 
-  def query
-    if File.directory?("/Applications/#{resource[:name]}.app")
-      { :name => resource[:name], :ensure => :present, :provider => :dmg }
-    end
+  def extract
+    hdiutil(:attach, dmg, "-nobrowse", "-mountpoint", "mount")
   end
 
-  def install
-    Dir.mktmpdir do |dir|
-      Dir.chdir(dir) do
-        dmg = "#{resource[:name]}.dmg"
+  def install_application
+    FileUtils.cp_r("mount/#{resource[:name]}.app", "/Applications")
+  end
 
-        # Download the disk image.
-        curl("-o", dmg, "-L", resource[:source])
-
-        # Mount it.
-        hdiutil(:attach, dmg, "-nobrowse", "-mountpoint", "mount")
-
-        # Copy the named application to /Applications.
-        FileUtils.cp_r("mount/#{resource[:name]}.app", "/Applications")
-
-        # Unmount the image.
-        hdiutil(:detach, "mount")
-      end
-    end
+  def cleanup
+    hdiutil(:detach, "mount")
   end
 end

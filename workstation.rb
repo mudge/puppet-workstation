@@ -38,7 +38,7 @@ node "default" do
       "Spotify"          => "http://download.spotify.com/Spotify.dmg",
       "Skype"            => "http://www.skype.com/go/getskype-macosx.dmg",
       "Dropbox"          => "https://www.dropbox.com/download?plat=mac",
-      "LaunchBar"        => "http://www.obdev.at/downloads/LaunchBar/nightly/LaunchBar-5.2-nightly-907.dmg",
+      "LaunchBar"        => "http://www.obdev.at/downloads/launchbar/LaunchBar-5.2.dmg",
       "PS3 Media Server" => "http://ps3mediaserver.googlecode.com/files/pms-macosx-1.52.1.dmg",
       "Transmission"     => "http://download.transmissionbt.com/files/Transmission-2.51.dmg"
     }.each do |name, source|

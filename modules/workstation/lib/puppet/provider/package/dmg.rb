@@ -4,12 +4,12 @@ require "tmpdir"
 Puppet::Type.type(:package).provide(:dmg, :parent => :application) do
   desc "Package management using Disk Images from the Internet."
 
-  commands :hdiutil => "hdiutil"
+  commands :hdiutil => "hdiutil", :yes => "yes"
 
   private
 
   def dmg
-    "#{resource[:name]}.dmg"
+    "image.dmg"
   end
 
   def download
@@ -17,7 +17,7 @@ Puppet::Type.type(:package).provide(:dmg, :parent => :application) do
   end
 
   def extract
-    hdiutil(:attach, dmg, "-nobrowse", "-mountpoint", "mount")
+    execute("yes | hdiutil attach #{dmg} -nobrowse -mountpoint mount")
   end
 
   def install_application

@@ -58,6 +58,11 @@ node "default" do
       :source   => "http://notational.net/NotationalVelocity.zip",
       :provider => :archive
 
+    package "Postgres",
+      :ensure   => :present,
+      :source   => "http://postgres-app.s3.amazonaws.com/Postgres-for-Mac-Beta-4.zip",
+      :provider => :archive
+
     vcsrepo "#{ENV["HOME"]}/.rbenv",
       :ensure   => :present,
       :source   => "git://github.com/sstephenson/rbenv.git",

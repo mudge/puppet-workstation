@@ -60,7 +60,7 @@ node "default" do
 
     package "Postgres",
       :ensure   => :present,
-      :source   => "http://postgres-app.s3.amazonaws.com/Postgres-for-Mac-Beta-4.zip",
+      :source   => "http://postgresapp.com/download",
       :provider => :archive
 
     vcsrepo "#{ENV["HOME"]}/.rbenv",
@@ -85,7 +85,7 @@ node "default" do
       :provider => :git,
       :force    => true
 
-    brew %w[git hub gnupg tree ack mercurial]
+    brew %w[git hub gnupg tree ack mercurial tmux reattach-to-user-namespace]
 
     # re2 is a HEAD-only package.
     package "re2",
@@ -103,7 +103,7 @@ node "default" do
       :ensure => :link,
       :target => "/usr/local/bin/mvim"
 
-    dotfile %w[.vim .vimrc .gvimrc .zshrc .gemrc .bundle]
+    dotfile %w[.vim .vimrc .gvimrc .zshrc .gemrc .bundle .tmux.conf]
 
     %w[.gnupg .ssh].each do |dotfile|
       file "#{ENV["HOME"]}/#{dotfile}",
